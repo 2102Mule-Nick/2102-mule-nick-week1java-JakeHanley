@@ -261,8 +261,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> num = new HashMap<String, Integer>();
+				
+			for(String words : string.split(" ")) {
+				if(num.containsKey(words)) {
+					num.put(words, num.get(num) + 1);
+					System.out.println(num);
+				}else {
+					num.put(words, 1);
+					System.out.println(num);
+				}
+			}
+		
+		return num;
 	}
 
 	/**
@@ -447,16 +458,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-			HashSet<Integer> prime = new LinkedHashSet<>();
+			List<Long> list = new ArrayList<>();
 			long x = 2;
-			for(int i = 2; i < l; i++) {
-				while(l % i == 0) {
-					prime.add((int) l);
-					l = l /i;
-					//System.out.println(l);
+				while(x <= l) {
+					if(l % x == 0) {
+					list.add(x);
+					l = l /x;
+				}else {
+					x++;
 				}
 			}
-			return x;
+			return list;
 			
 				
 			
@@ -498,16 +510,19 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			String s = "";
-			int length = string.length();
-				for(int i = 0; i < length; i++) {
-				char c = (char)(string.charAt(i) + key);
-				if(c > 'z')
-					s += (char)(string.charAt(i) - (26 - key));
-				else 
-					s += (char)(string.charAt(i) + key);
-			}
-			return s;
+				/*StringBuilder s = new StringBuilder();
+				for(int i = 0; i < string.length(); i++) {
+					char c = string.charAt(i);
+					if(c >= 'A' && c <= 'Z') {
+						s.append((char) ('A' + ((c - 'A') + key) % 26));
+					}else if (c >= 'a' && c <= 'z') {
+						s.append((char) ('a' + (c - 'a') + key) %26);
+					}else {
+						s.append(c);
+					}
+				}
+			
+			*/return null;
 		}
 
 	}
@@ -525,7 +540,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-
+			
 		return 0;
 	}
 
@@ -562,8 +577,32 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-
-			return null;
+			StringBuilder s = new StringBuilder();
+			String str = string.toLowerCase();
+			int spaceCount = 0;
+				for(int i = 0; i < str.length(); i ++) {
+					char c = str.charAt(i);
+							boolean added = false;
+						if(c >= 'a' && c <= 'z' ) {
+							char encoded = (char) ('z' - (c - 'a'));
+							s.append(encoded);
+							added = true;
+						}else if(Character.isDigit(c)) {
+							s.append(c);
+							added = true;
+						}
+						if(added) {
+							spaceCount++;
+							if(spaceCount == 5) {
+								s.append(' ');
+								spaceCount = 0;
+							}
+						}
+				}
+				if(s.charAt(s.length() - 1) == ' '){
+					s.deleteCharAt(s.length() - 1);
+				}
+			return s.toString();
 		}
 
 		/**
@@ -573,9 +612,17 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			
-			
-			return null;
+			StringBuilder s = new StringBuilder();
+				for(int i = 0; i < string.length(); i++) {
+					char c = string.charAt(i);
+					if(c >= 'a' &&  c <= 'z') {
+						char encoded = (char) ('z' - (c - 'a'));
+						s.append(encoded);
+					}else if(c != ' '){
+						s.append(c);
+					}
+			}
+			return s.toString();
 		}
 	}
 
@@ -660,7 +707,8 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
+			
+		
 		return null;
 	}
 
@@ -678,9 +726,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-			
+			int sum = 0;
+				for(int x = 1; x < i; x++) {
+					for(int m : set) {
+						if(x % m == 0) {
+							sum += x;
+							break;
+						}
+					}
+				}
 		
-		return 0;
+		return sum;
 	}
 
 	/**
@@ -720,27 +776,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		int[] num = new int[string.length()];
-			for(int i = 0; i < string.length(); i++) {
-				num[i] = Integer.parseInt(string.substring(i, i +1));
-				}
-			for(int i = num.length - 2; i >= 0; i = i -2) {
-				int tempValue = num[i];
-				tempValue = tempValue * 2;
-				if(tempValue > 9) {
-					tempValue = tempValue % 10 +1;
-				}
-				num[i] = tempValue;
-			}
+		int sum = 0;
+		boolean doubled = false;
+		int digitsum = 0;
+		
+		for(int i = 0; i < string.length(); i++) {
+			char c = string.charAt(i);
 			
-			int total = 0;
-			for(int i = 0; i < num.length; i++) {
-				total += num[i];
-			}
-			
-			if(total % 10 == 0) {
-				return true;
-			}else
+		}
+		
 		return false;
 	}
 
